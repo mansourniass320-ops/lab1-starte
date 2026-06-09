@@ -1,6 +1,14 @@
 import styles from "./EvenementCarte.module.css";
 
-const EvenementCarte = ({ ev, afficherDetails }) => {
+// On remplace "ev" par "evenement" pour être raccord avec App.jsx
+const EvenementCarte = ({ evenement, afficherDetails }) => {
+  // Pour éviter d'avoir à réécrire "evenement.titre", "evenement.prix" partout,
+  // on peut créer un raccourci local "ev" juste ici :
+  const ev = evenement; 
+
+  // Si jamais "evenement" n'est pas encore chargé, on évite le crash
+  if (!ev) return null;
+
   const prix = ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`;
 
   return (
