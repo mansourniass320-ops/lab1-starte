@@ -1,76 +1,48 @@
 import { useState, useEffect } from "react";
 import EvenementCarte from "./components/EvenementCarte";
 import SearchBar from "./components/SearchBar";
+import EtatChargement from "./components/EtatChargement";
 import styles from "./App.module.css";
 
 const App = () => {
-  const [evenements, setEvenements] = useState([]);
-  const [chargement, setChargement] = useState(true);
+  // --- États fictifs (en attendant la suite de ton TP pour useEffect) ---
+  const [chargement, setChargement] = useState(false);
   const [erreur, setErreur] = useState(null);
   const [recherche, setRecherche] = useState("");
+  const [evenementsFiltres, setEvenementsFiltres] = useState([]);
 
-  const charger = async () => {
-    setChargement(true);
-    setErreur(null);
-    try {
-      const reponse = await fetch("/evenements-faux.json");
-      if (!reponse.ok) {
-        throw new Error(`Erreur HTTP ${reponse.status}`);
-      }
-      const data = await reponse.json();
-      setEvenements(data);
-    } catch (e) {
-      setErreur(e.message);
-    } finally {
-      setChargement(false);
-    }
+  const charger = () => {
+    // Ta fonction pour recharger les données
   };
-
-  useEffect(() => {
-    charger();
-  }, []);
-
-  const evenementsFiltres = evenements.filter(ev =>
-    ev.titre.toLowerCase().includes(recherche.toLowerCase())
-  );
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.titre}>SenEvent --- Evenements a Dakar</h1>
-
-      {chargement && (
-        <p className={styles.message}>Chargement des evenements ...</p>
-      )}
-
-      {erreur && (
-        <div className={styles.erreur}>
-          <p>Erreur : {erreur}</p>
-          <button className={styles.bouton} onClick={charger}>
-            Réessayer
-          </button>
-        </div>
-      )}
+      <h1 className={styles.titre}>SenEvent --- Événements à Dakar</h1>
+      
+      <EtatChargement
+        chargement={chargement}
+        erreur={erreur}
+        onReessayer={charger}
+      />
 
       {!chargement && !erreur && (
         <>
           <SearchBar recherche={recherche} onRecherche={setRecherche} />
           <p className={styles.compteur}>
-            {evenementsFiltres.length} evenement(s) trouvé(s)
+            {evenementsFiltres.length} événement(s) trouvé(s)
           </p>
-          
+
           {evenementsFiltres.length === 0 ? (
-            <p className={styles.message}>Aucun evenement ne correspond.</p>
+            <p className={styles.messageVide}>Aucun événement ne correspond.</p>
           ) : (
-            <div className={styles.grid}>
-              {evenementsFiltres.map(ev => (
-                <EvenementCarte key={ev.id} evenement={ev} afficherDetails={true} />
-              ))}
-            </div>
+            evenementsFiltres.map((ev) => (
+              <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
+            ))
           )}
         </>
       )}
     </div>
   );
-};
+}; // <--- Vérifie bien que cette accolade et ce point-virgule sont là !
 
 export default App;
