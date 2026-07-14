@@ -27,3 +27,5 @@
   color: #ea7d2b;
   font-weight: bold;
 }
+
+.lien { text-decoration: none; color: inherit; }
