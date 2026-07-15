@@ -1,0 +1,4 @@
+.chargement { text-align: center; padding: 2rem; font-style: italic; color: #555; }
+.erreur { text-align: center; padding: 2rem; color: #a01a1a; background: #fdf2f2; border: 1px solid #f8d7da; border-radius: 4px; margin: 1rem 0; }
+.bouton { margin-top: 1rem; padding: 0.5rem 1rem; background: #a01a1a; color: white; border: none; border-radius: 4px; cursor: pointer; }
+.bouton:hover { background: #801515; }
