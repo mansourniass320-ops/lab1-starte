@@ -1,0 +1,20 @@
+import styles from "./EvenementCarte.module.css";
+
+const EvenementCarte = ({ ev, afficherDetails }) => {
+  const prix = ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`;
+
+  return (
+    <div className={styles.carte}>
+      <h3 className={styles.titre}>{ev.titre}</h3>
+      <p className={styles.info}>
+        📂 Catégorie : <strong>{ev.categorie}</strong>
+      </p>
+      {afficherDetails && (
+        <p className={styles.info}>📍 Lieu : {ev.lieu_nom}</p>
+      )}
+      <p className={styles.prix}>💰 {prix}</p>
+    </div>
+  );
+};
+
+export default EvenementCarte;
